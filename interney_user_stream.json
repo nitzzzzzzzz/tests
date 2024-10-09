@@ -1,0 +1,34 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "description": "Stream graph showing internet usage across income groups over time.",
+    "width": 700,
+    "height": 400,
+    "data": {
+      "url": "https://raw.githubusercontent.com/nitzzzzzzzz/datasets/refs/heads/main/combined_income_internet_users.csv"
+    },
+    "mark": "area",
+    "encoding": {
+      "x": {
+        "field": "Year",
+        "type": "temporal",
+        "axis": {"title": "Year"}
+      },
+      "y": {
+        "aggregate": "sum",
+        "field": "Individuals using the Internet (% of population)",
+        "type": "quantitative",
+        "stack": "center",
+        "axis": {"title": "Internet Usage (%)"}
+      },
+      "color": {
+        "field": "Entity",
+        "type": "nominal",
+        "legend": {"title": "Income Group"}
+      },
+      "tooltip": [
+        {"field": "Entity", "type": "nominal", "title": "Income Group"},
+        {"field": "Year", "type": "temporal"},
+        {"field": "Individuals using the Internet (% of population)", "type": "quantitative", "title": "Internet Usage (%)"}
+      ]
+    }
+  }
