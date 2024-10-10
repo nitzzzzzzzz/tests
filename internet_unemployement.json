@@ -15,15 +15,25 @@
     }
   },
   "transform": [
-    {"filter": "datum['Category'] != null && datum['Category'] != ''"}, 
-    {"fold": ["Yes, has access to the internet", "No, does not have access"], "as": ["Access Type", "Percentage"]}
+    {"filter": "datum['Category'] != null && datum['Category'] != ''"},
+    {
+      "fold": [
+        "Yes, has access to the internet", 
+        "No, does not have access"
+      ], 
+      "as": ["Access Type", "Percentage"]
+    },
+    {
+      "calculate": "datum['Access Type'] == 'Yes, has access to the internet' ? 'YES' : 'NO'",
+      "as": "Access Type Short"
+    }
   ],
   "params": [
     {
       "name": "access_highlight",
       "select": {
         "type": "point",
-        "fields": ["Access Type"]
+        "fields": ["Access Type Short"]
       },
       "bind": "legend"
     }
@@ -40,24 +50,30 @@
       "offset": 20
     },
     "yOffset": {
-      "field": "Access Type",  
-      "type": "nominal"       
+      "field": "Access Type Short",
+      "type": "nominal"
     },
     "x": {
       "field": "Percentage",
       "type": "quantitative",
       "axis": {
         "title": "Share of Respondents (%)",
-        "grid": false 
+        "grid": false
       }
     },
     "color": {
-      "field": "Access Type",
+      "field": "Access Type Short",
       "type": "nominal",
       "scale": {
         "range": ["#008080", "#87CEEB"]
       },
-      "legend": {"title": "Internet Access"}
+      "legend": {
+        "title": "Internet Access",
+        "symbolSize": 200,
+        "symbolLimit": 100,
+        "direction": "vertical",
+        "orient": "right"
+      }
     },
     "opacity": {
       "condition": {
@@ -68,17 +84,17 @@
     },
     "tooltip": [
       {"field": "Category", "type": "nominal", "title": "Employment Status"},
-      {"field": "Access Type", "type": "nominal", "title": "Internet Access"},
+      {"field": "Access Type Short", "type": "nominal", "title": "Internet Access"},
       {"field": "Percentage", "type": "quantitative", "title": "Percentage (%)"}
     ]
   },
   "config": {
     "view": {
-      "stroke": null 
+      "stroke": null
     },
     "axis": {
-      "domain": false, 
-      "grid": false  
+      "domain": false,
+      "grid": false
     }
   }
 }
