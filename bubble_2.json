@@ -1,0 +1,116 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 600,
+  "height": 300,
+  "title": {
+    "text": "Learning Poverty vs GNI per Capita",
+    "anchor": "start",
+    "fontSize": 14,
+    "dx": 20
+  },
+  "data": {
+    "url": "https://raw.githubusercontent.com/nitzzzzzzzz/datasets/refs/heads/main/lr_continents.csv"
+  },
+  "params": [
+    {
+      "name": "Continent_selection",
+      "bind": {
+        "input": "select",
+        "options": [
+          null,
+          "Africa",
+          "Asia",
+          "Europe",
+          "North America",
+          "South America"
+        ],
+        "labels": [
+          "Show All",
+          "Africa",
+          "Asia",
+          "Europe",
+          "North America",
+          "South America"
+        ],
+        "name": "Continent Selection: "
+      }
+    }
+  ],
+  "config": {
+    "view": {
+      "stroke": null  // Removes the border from the entire chart
+    }
+  },
+  "transform": [
+    {
+      "filter": "Continent_selection == null || datum.Continent == Continent_selection"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "learning_poverty",
+      "type": "quantitative",
+      "title": "Learning Poverty (%)",
+      "axis": {"tickCount": 7, "grid": false}
+    },
+    "y": {
+      "field": "gni_per_capita",
+      "type": "quantitative",
+      "title": "GNI per Capita",
+      "axis": {"tickCount": 6, "grid": false},
+      "scale": {"domain": [0, 60000]}
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "circle",
+        "stroke": null
+      },
+      "encoding": {
+        "size": {
+          "field": "internet_users",
+          "type": "quantitative",
+          "title": "Internet Users (%)",
+          "scale": {
+            "domain": [0, 20, 40, 60, 80, 100],
+            "range": [100, 150, 200, 300, 500, 700]  // Sizes for the ranges
+          },
+          "legend": {
+            "title": "Internet Users (%)",
+            "format": ".1f",
+            "values": [10, 30, 50, 70, 90],  // Ranges in the legend
+            "labelExpr": "datum.value <= 20 ? '0-20%' : datum.value <= 40 ? '21-40%' : datum.value <= 60 ? '41-60%' : datum.value <= 80 ? '61-80%' : '81-100%'"
+          }
+        },
+        "color": {
+          "field": "Continent",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Africa",
+              "Asia",
+              "Europe",
+              "North America",
+              "South America"
+            ],
+            "range": [
+              "#e41a1c",
+              "#984ea3",
+              "#ff7f00",
+              "#a6cee3",
+              "#377eb8"
+            ]
+          },
+          "legend": {"title": "Continent"}
+        },
+        "tooltip": [
+          {"field": "Entity", "type": "nominal", "title": "Country"},
+          {"field": "gni_per_capita", "type": "quantitative", "format": ","},
+          {"field": "learning_poverty", "type": "quantitative", "format": ","},
+          {"field": "internet_users", "type": "quantitative", "title": "Internet Users (%)"}
+        ]
+      }
+    }
+  ]
+}
