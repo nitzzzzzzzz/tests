@@ -1,0 +1,84 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Side-by-side bar chart showing internet access based on employment status in 2019 with legend interaction.",
+  "title": {
+    "text": null,
+    "anchor": "middle",
+    "fontSize": 10
+  },
+  "width": 200,
+  "height": 200,
+  "data": {
+    "url": "https://raw.githubusercontent.com/nitzzzzzzzz/hw_week_10_fit3179/refs/heads/main/statistic_id1114434_share-of-global-adults-with-internet-access-2019-by-employment-status.csv",
+    "format": {
+      "type": "csv"
+    }
+  },
+  "transform": [
+    {"filter": "datum['Category'] != null && datum['Category'] != ''"}, 
+    {"fold": ["Yes, has access to the internet", "No, does not have access"], "as": ["Access Type", "Percentage"]}
+  ],
+  "params": [
+    {
+      "name": "access_highlight",
+      "select": {
+        "type": "point",
+        "fields": ["Access Type"]
+      },
+      "bind": "legend"
+    }
+  ],
+  "mark": "bar",
+  "encoding": {
+    "y": {
+      "field": "Category",
+      "type": "nominal",
+      "axis": {
+        "title": "Employment Status",
+        "labelAngle": 0
+      },
+      "offset": 20
+    },
+    "yOffset": {
+      "field": "Access Type",  
+      "type": "nominal"       
+    },
+    "x": {
+      "field": "Percentage",
+      "type": "quantitative",
+      "axis": {
+        "title": "Share of Respondents (%)",
+        "grid": false 
+      }
+    },
+    "color": {
+      "field": "Access Type",
+      "type": "nominal",
+      "scale": {
+        "range": ["#008080", "#87CEEB"]
+      },
+      "legend": {"title": "Internet Access"}
+    },
+    "opacity": {
+      "condition": {
+        "param": "access_highlight",
+        "value": 1
+      },
+      "value": 0.3
+    },
+    "tooltip": [
+      {"field": "Category", "type": "nominal", "title": "Employment Status"},
+      {"field": "Access Type", "type": "nominal", "title": "Internet Access"},
+      {"field": "Percentage", "type": "quantitative", "title": "Percentage (%)"}
+    ]
+  },
+  "config": {
+    "view": {
+      "stroke": null 
+    },
+    "axis": {
+      "domain": false, 
+      "grid": false  
+    }
+  }
+}
