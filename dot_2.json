@@ -8,7 +8,7 @@
   },
   "config": {
     "view": {
-      "stroke": null  // Removes the border from the entire chart
+      "stroke": null  
     }
   },
   "transform": [
