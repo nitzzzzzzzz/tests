@@ -1,73 +1,79 @@
 {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "title": "Completion Rates by Gender",
-    "data": {
-      "url": "https://raw.githubusercontent.com/nitzzzzzzzz/datasets/refs/heads/main/completion_rate_new.csv",
-      "format": {"type": "csv"}
-    },
-    "transform": [
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": "Completion Rates by Gender",
+  "data": {
+    "url": "https://raw.githubusercontent.com/nitzzzzzzzz/datasets/refs/heads/main/completion_rate_new.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {
+      "calculate": "replace(datum.Category, ' Completion Rate', '')",
+      "as": "ShortCategory"
+    }
+  ],
+  "facet": {
+    "column": {
+      "field": "ShortCategory",
+      "type": "nominal",
+      "header": {
+        "title": "Completion Level"
+      }
+    }
+  },
+  "spec": {
+    "width": 200,
+    "height": 200,
+    "layer": [
       {
-        "calculate": "replace(datum.Category, ' Completion Rate', '')",
-        "as": "ShortCategory"
-      }
-    ],
-    "facet": {
-      "column": {
-        "field": "ShortCategory",
-        "type": "nominal",
-        "header": {"title": "Completion Level"}
-      }
-    },
-    "spec": {
-      "layer": [
-        {
-          "mark": {
-            "type": "arc",
-            "innerRadius": 70
-          },
-          "encoding": {
-            "theta": {
-              "field": "Value",
-              "type": "quantitative"
-            },
-            "color": {
-              "field": "Gender",
-              "type": "nominal",
-              "scale": {"range": ["#1f77b4", "#ff7f0e"]},  
-              "legend": {
-                "title": "Gender",
-                "orient": "right"
-              }
-            },
-            "tooltip": [
-              {"field": "Gender", "type": "nominal", "title": "Gender"},
-              {"field": "Value", "type": "quantitative", "title": "Completion Rate (%)"}
-            ]
-          }
+        "mark": {
+          "type": "arc",
+          "innerRadius": 70
         },
-        {
-          "mark": {
-            "type": "text",
-            "align": "center",
-            "baseline": "middle",
-            "fontSize": 14,
-            "fontWeight": "bold"
+        "encoding": {
+          "theta": {
+            "field": "Value",
+            "type": "quantitative"
           },
-          "encoding": {
-            "text": {
-              "field": "ShortCategory",
-              "type": "nominal"
+          "color": {
+            "field": "Gender",
+            "type": "nominal",
+            "scale": {
+              "range": ["#1f77b4", "#ff7f0e"]
             },
-            "color": {
-              "value": "black"  
+            "legend": {
+              "title": "Gender",
+              "orient": "right"
             }
+          },
+          "tooltip": [
+            {"field": "Gender", "type": "nominal", "title": "Gender"},
+            {"field": "Value", "type": "quantitative", "title": "Completion Rate (%)"}
+          ]
+        }
+      },
+      {
+        "mark": {
+          "type": "text",
+          "align": "center",
+          "baseline": "middle",
+          "fontSize": 14,
+          "fontWeight": "bold"
+        },
+        "encoding": {
+          "text": {
+            "field": "ShortCategory",
+            "type": "nominal"
+          },
+          "color": {
+            "value": "black"
           }
         }
-      ]
-    },
-    "config": {
-      "view": {"stroke": "transparent"}, 
-      "axis": {"labelFontSize": 14, "titleFontSize": 14}
-    }
+      }
+    ]
+  },
+  "config": {
+    "view": {"stroke": "transparent"},
+    "axis": {"labelFontSize": 14, "titleFontSize": 14}
   }
+}
   
