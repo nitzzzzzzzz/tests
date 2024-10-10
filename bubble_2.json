@@ -38,7 +38,7 @@
   ],
   "config": {
     "view": {
-      "stroke": null  // Removes the border from the entire chart
+      "stroke": null  
     }
   },
   "transform": [
@@ -74,12 +74,12 @@
           "title": "Internet Users (%)",
           "scale": {
             "domain": [0, 20, 40, 60, 80, 100],
-            "range": [100, 150, 200, 300, 500, 700]  // Sizes for the ranges
+            "range": [100, 150, 200, 300, 500, 700]  
           },
           "legend": {
             "title": "Internet Users (%)",
             "format": ".1f",
-            "values": [10, 30, 50, 70, 90],  // Ranges in the legend
+            "values": [10, 30, 50, 70, 90],  
             "labelExpr": "datum.value <= 20 ? '0-20%' : datum.value <= 40 ? '21-40%' : datum.value <= 60 ? '41-60%' : datum.value <= 80 ? '61-80%' : '81-100%'"
           }
         },
