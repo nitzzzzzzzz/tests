@@ -1,0 +1,44 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Stream graph showing internet usage across income groups over time.",
+  "width": 400,
+  "height": 400,
+  "data": {
+    "url": "https://raw.githubusercontent.com/nitzzzzzzzz/datasets/refs/heads/main/combined_income_internet_users.csv"
+  },
+  "transform": [
+    {
+      "calculate": "datum.Entity == 'Low-income countries' ? 'LIC' : datum.Entity == 'High-income countries' ? 'HIC' : datum.Entity == 'World' ? 'World' : datum.Entity",
+      "as": "ShortEntity"
+    }
+  ],
+  "mark": "area",
+  "encoding": {
+    "x": {
+      "field": "Year",
+      "type": "temporal",
+      "axis": {"title": "Year"}
+    },
+    "y": {
+      "aggregate": "sum",
+      "field": "Individuals using the Internet (% of population)",
+      "type": "quantitative",
+      "stack": "zero",  
+      "axis": {"title": "Internet Usage (%)", "labels": false, "ticks": false}
+    },
+    "color": {
+      "field": "ShortEntity",
+      "type": "nominal",
+      "scale": {
+        "domain": ["LIC", "HIC", "World"],
+        "range": ["#e6959c", "#4682b4", "#9f0642"]
+      },
+      "legend": {"title": "Income Group"}
+    },
+    "tooltip": [
+      {"field": "ShortEntity", "type": "nominal", "title": "Income Group"},
+      {"field": "Year", "type": "temporal"},
+      {"field": "Individuals using the Internet (% of population)", "type": "quantitative", "title": "Internet Usage (%)"}
+    ]
+  }
+}
