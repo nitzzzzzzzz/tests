@@ -1,8 +1,8 @@
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "description": "A ranged dot plot that shows the use of distance learning platforms for different income groups.",
-    "width": 800,
-    "height": 500,
+    "width": 200,
+    "height": 200,
     "data": {
       "url": "https://raw.githubusercontent.com/nitzzzzzzzz/datasets/refs/heads/main/goal04.instructionplatforms.csv"
     },
