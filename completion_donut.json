@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Completion Rates by Gender",
+  "title": null,
   "data": {
     "url": "https://raw.githubusercontent.com/nitzzzzzzzz/datasets/refs/heads/main/completion_rate_new.csv",
     "format": {"type": "csv"}
@@ -15,19 +15,18 @@
     "column": {
       "field": "ShortCategory",
       "type": "nominal",
-      "header": {
-        "title": "Completion Level"
-      }
+      "header": null
     }
   },
-  "spec": {
-    "width": 200,
-    "height": 200,
+   "spec": {
+    "width": 300,
+    "height": 300,
     "layer": [
       {
         "mark": {
           "type": "arc",
           "innerRadius": 70
+
         },
         "encoding": {
           "theta": {
@@ -37,9 +36,7 @@
           "color": {
             "field": "Gender",
             "type": "nominal",
-            "scale": {
-              "range": ["#1f77b4", "#ff7f0e"]
-            },
+            "scale": {"range": ["#1f77b4", "#ff7f0e"]},  
             "legend": {
               "title": "Gender",
               "orient": "right"
@@ -65,15 +62,14 @@
             "type": "nominal"
           },
           "color": {
-            "value": "black"
+            "value": "black"  
           }
         }
       }
     ]
   },
   "config": {
-    "view": {"stroke": "transparent"},
+    "view": {"stroke": "transparent"}, 
     "axis": {"labelFontSize": 14, "titleFontSize": 14}
   }
 }
-  
