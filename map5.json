@@ -17,7 +17,7 @@
         "url": "https://raw.githubusercontent.com/FIT3179/Vega-Lite/main/2_symbol_map/js/WorldMapWithGraticules.topojson",
         "format": {"type": "topojson", "feature": "ne_110m_graticules_30"}
       },
-      "mark": {"type": "geoshape", "fill": null, "stroke": "#4d4d4d"}  /* Darker graticules */
+      "mark": {"type": "geoshape", "fill": null, "stroke": "#4d4d4d"}  
     },
     {
       "data": {
