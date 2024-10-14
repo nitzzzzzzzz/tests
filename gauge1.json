@@ -1,0 +1,227 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "#eef7f9",
+  "vconcat": [
+    {
+      "hconcat": [
+        {
+          "description": "A rotated half-donut gauge chart for Female Unemployment Rate",
+          "width": 200,
+          "height": 100,
+          "data": {
+            "url": "https://raw.githubusercontent.com/nitzzzzzzzz/datasets/refs/heads/main/unemployement_by_gender.csv",
+            "format": {"type": "csv"}
+          },
+          "transform": [
+            {
+              "aggregate": [
+                {
+                  "op": "mean",
+                  "field": "Unemployment, female (% of female labor force) (modeled ILO estimate)",
+                  "as": "avg_female_unemployment"
+                }
+              ]
+            },
+            {
+              "calculate": "100 - datum.avg_female_unemployment",
+              "as": "inverse_female_unemployment"
+            }
+          ],
+          "layer": [
+            {
+              "mark": {
+                "type": "text",
+                "align": "center",
+                "baseline": "middle",
+                "dx": 0,
+                "dy": -120,
+                "fontSize": 16,
+                "fontWeight": "bold"
+              },
+              "encoding": {
+                "text": {"value": "Female"}
+              }
+            },
+            {
+              "mark": {
+                "type": "arc",
+                "innerRadius": 50,
+                "outerRadius": 80,
+                "startAngle": {"expr": "-PI / 2"},
+                "endAngle": {"expr": "PI / 2"}
+              },
+              "encoding": {
+                "color": {"value": "#e0e0e0"}
+              }
+            },
+            {
+              "mark": {
+                "type": "arc",
+                "innerRadius": 50,
+                "outerRadius": 80,
+                "startAngle": {"expr": "-PI / 2"},
+                "endAngle": {"expr": "-PI / 2 + PI * datum.inverse_female_unemployment / 100"}
+              },
+              "encoding": {
+                "color": {"value": "#ff7f0e"}
+              }
+            },
+            {
+              "mark": {
+                "type": "point",
+                "shape": "triangle",
+                "filled": true,
+                "size": 200,
+                "color": "black"
+                
+              },
+              "encoding": {
+                "x": {
+                  "expr": "(200 / 2) + 60 * cos((-PI / 2 + PI * datum.inverse_female_unemployment / 100))"
+                },
+                "y": {
+                  "expr": "(100 / 2) + 60 * sin((-PI / 2 + PI * datum.inverse_female_unemployment / 100))"
+                }
+              }
+            },
+            {
+              "mark": {
+                "type": "text",
+                "align": "center",
+                "baseline": "middle",
+                "dx": 0,
+                "dy": -20,
+                "fontSize": 20
+              },
+              "encoding": {
+                "text": {"field": "inverse_female_unemployment", "type": "quantitative", "format": ".1f"},
+                "color": {"value": "black"}
+              }
+            },
+            {
+              "mark": {
+                "type": "text",
+                "align": "center",
+                "baseline": "middle",
+                "dx": 0,
+                "dy": -100,
+                "fontSize": 14
+              },
+              "encoding": {
+                "text": {"value": "%"}
+              }
+            }
+          ]
+        },
+        {
+          "description": "A rotated half-donut gauge chart for Male Unemployment Rate",
+          "width": 200,
+          "height": 100,
+          "data": {
+            "url": "https://raw.githubusercontent.com/nitzzzzzzzz/datasets/refs/heads/main/unemployement_by_gender.csv",
+            "format": {"type": "csv"}
+          },
+          "transform": [
+            {
+              "aggregate": [
+                {
+                  "op": "mean",
+                  "field": "Unemployment, male (% of male labor force) (modeled ILO estimate)",
+                  "as": "avg_male_unemployment"
+                }
+              ]
+            },
+            {
+              "calculate": "100 - datum.avg_male_unemployment",
+              "as": "inverse_male_unemployment"
+            }
+          ],
+          "layer": [
+            {
+              "mark": {
+                "type": "text",
+                "align": "center",
+                "baseline": "middle",
+                "dx": 0,
+                "dy": -120,
+                "fontSize": 16,
+                "fontWeight": "bold"
+              },
+              "encoding": {
+                "text": {"value": "Male"}
+              }
+            },
+            {
+              "mark": {
+                "type": "arc",
+                "innerRadius": 50,
+                "outerRadius": 80,
+                "startAngle": {"expr": "-PI / 2"},
+                "endAngle": {"expr": "PI / 2"}
+              },
+              "encoding": {
+                "color": {"value": "#e0e0e0"}
+              }
+            },
+            {
+              "mark": {
+                "type": "arc",
+                "innerRadius": 50,
+                "outerRadius": 80,
+                "startAngle": {"expr": "-PI / 2"},
+                "endAngle": {"expr": "-PI / 2 + PI * datum.inverse_male_unemployment / 100"}
+              },
+              "encoding": {
+                "color": {"value": "#1f77b4"}
+              }
+            },
+            {
+              "mark": {
+                "type": "point",
+                "shape": "triangle",
+                "filled": true,
+                "size": 200,
+                "color": "black"
+              },
+              "encoding": {
+                "x": {
+                  "expr": "(200 / 2) + 60 * cos((-PI / 2 + PI * datum.inverse_male_unemployment / 100))"
+                },
+                "y": {
+                  "expr": "(100 / 2) + 60 * sin((-PI / 2 + PI * datum.inverse_male_unemployment / 100))"
+                }
+              }
+            },
+            {
+              "mark": {
+                "type": "text",
+                "align": "center",
+                "baseline": "middle",
+                "dx": 0,
+                "dy": -20,
+                "fontSize": 20
+              },
+              "encoding": {
+                "text": {"field": "inverse_male_unemployment", "type": "quantitative", "format": ".1f"},
+                "color": {"value": "black"}
+              }
+            },
+            {
+              "mark": {
+                "type": "text",
+                "align": "center",
+                "baseline": "middle",
+                "dx": 0,
+                "dy": -100,
+                "fontSize": 14
+              },
+              "encoding": {
+                "text": {"value": "%"}
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
