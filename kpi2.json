@@ -1,0 +1,135 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "background": "black",
+  "vconcat": [
+    {
+      "hconcat": [
+        {
+          "data": {
+            "url": "https://raw.githubusercontent.com/nitzzzzzzzz/datasets/refs/heads/main/duration_compulsory_education_2022.csv",
+            "format": {"type": "csv"}
+          },
+          "transform": [
+            {
+              "aggregate": [
+                {
+                  "op": "mean",
+                  "field": "Duration of compulsory education (years)",
+                  "as": "avg_compulsory_education"
+                }
+              ]
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "fontSize": 20,
+            "font": "Arial",  
+            "fontWeight": "bold" 
+          },
+          "encoding": {
+            "text": {
+              "field": "avg_compulsory_education",
+              "type": "quantitative",
+              "format": ".2f"
+            },
+            "color": {"value": "white"}
+          },
+          "title": {
+            "text": "Average Compulsory School Years",
+            "fontSize": 14,
+            "font": "Arial", 
+            "fontWeight": "bold",  
+            "anchor": "middle",
+            "color": "white"
+          },
+          "width": 200,
+          "height": 50  
+        },
+        {
+          "data": {
+            "url": "https://raw.githubusercontent.com/nitzzzzzzzz/datasets/refs/heads/main/avg_schooling_years.csv",
+            "format": {"type": "csv"}
+          },
+          "transform": [
+            {
+              "aggregate": [
+                {
+                  "op": "mean",
+                  "field": "Average years of schooling",
+                  "as": "avg_schooling_years"
+                }
+              ]
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "fontSize": 20,
+            "font": "Arial", 
+            "fontWeight": "bold" 
+          },
+          "encoding": {
+            "text": {
+              "field": "avg_schooling_years",
+              "type": "quantitative",
+              "format": ".2f"
+            },
+            "color": {"value": "white"}
+          },
+          "title": {
+            "text": "Average Schooling Years",
+            "fontSize": 14,
+            "font": "Arial", 
+            "fontWeight": "bold",  
+            "anchor": "middle",
+            "color": "white"
+          },
+          "width": 200,
+          "height": 50
+        },
+        {
+          "data": {
+            "url": "https://raw.githubusercontent.com/nitzzzzzzzz/datasets/refs/heads/main/unemployement_by_gender.csv",
+            "format": {"type": "csv"}
+          },
+          "transform": [
+            {
+              "aggregate": [
+                {
+                  "op": "mean",
+                  "field": "Population (historical)",
+                  "as": "avg_population"
+                }
+              ]
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "fontSize": 20,
+            "font": "Arial", 
+            "fontWeight": "bold", 
+            "dx" : 0
+          },
+          "encoding": {
+            "text": {
+              "field": "avg_population",
+              "type": "quantitative",
+              "format": ".2s"
+            },
+            "color": {"value": "white"}
+          },
+          "title": {
+            "text": "Average Population of Countries",
+            "fontSize": 14,
+            "font": "Arial",  
+            "fontWeight": "bold",  
+            "anchor": "middle",
+            "color": "white", 
+            "dx" : 0
+          },
+          "width": 200,
+          "height": 50  
+        }
+      ]
+    }
+  ]
+}
