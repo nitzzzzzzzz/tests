@@ -1,0 +1,130 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Stream graph showing internet usage across income groups over time with annotation.",
+  "width": 2000,
+  "height": 300,
+  "background": "#eef7f9",
+  "data": {
+    "url": "https://raw.githubusercontent.com/nitzzzzzzzz/datasets/refs/heads/main/combined_income_internet_users.csv"
+  },
+  "transform": [
+    {
+      "calculate": "datum.Entity == 'Low-income countries' ? 'LIC' : datum.Entity == 'High-income countries' ? 'HIC' : datum.Entity",
+      "as": "ShortEntity"
+    },
+    {
+      "filter": "datum.ShortEntity == 'LIC' || datum.ShortEntity == 'HIC'"
+    }
+  ],
+  "layer": [
+    {
+      "mark": "area",
+      "encoding": {
+        "x": {
+          "field": "Year",
+          "type": "temporal",
+          "axis": {
+            "title": "Year",
+            "grid": false,
+            "domain": false,  
+            "ticks": false 
+          }
+        },
+        "y": {
+          "aggregate": "sum",
+          "field": "Individuals using the Internet (% of population)",
+          "type": "quantitative",
+          "stack": "zero",
+          "axis": {
+            "title": "Internet Usage (%)",
+            "labels": false,
+            "ticks": false,
+            "grid": false,
+            "domain": false
+          },
+          "scale": {
+            "domain": [0, 120]
+          }
+        },
+        "color": {
+          "field": "ShortEntity",
+          "type": "nominal",
+          "scale": {
+            "domain": ["LIC", "HIC"],
+            "range": ["#e6959c", "#4682b4"]
+          },
+          "legend": {
+            "title": "Income Group",
+            "orient": "top" , 
+            "direction": "horizontal",
+            "labelFontSize" : 17,
+            "titleAlign": "left",
+            "titleFontSize" : 17
+           
+            
+          }
+        },
+        "tooltip": [
+          {"field": "ShortEntity", "type": "nominal", "title": "Income Group"},
+          {"field": "Year", "type": "temporal"},
+          {
+            "field": "Individuals using the Internet (% of population)",
+            "type": "quantitative",
+            "title": "Internet Usage (%)"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {"type": "rule", "strokeWidth": 2, "color": "black"},
+      "encoding": {
+        "x2": {"datum": 200}, 
+        "y": {"datum": 50},  
+        "y2": {"datum": 90}  
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "text": "Countries such as Singapore and Italy are usually in the High Income Region", 
+        "dx": -410, 
+        "dy": -110,  
+        "fontSize": 18,
+        "fontWeight": "bold",
+        "align": "left",
+        "baseline": "bottom"
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "text": "Upto 90% of internet Usage  ", 
+        "dx": 40, 
+        "dy": 90,  
+        "fontSize": 25,
+        "fontWeight": "bold",
+        "align": "left",
+        "baseline": "bottom",
+        "color" : "white"
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "text": "< 20% of Internet Usage ", 
+        "dx": 200, 
+        "dy": 195,  
+        "fontSize": 17,
+        "fontWeight": "bold",
+        "align": "left",
+        "baseline": "bottom",
+        "color" : "white"
+      }
+    }
+  ],
+  "config": {
+    "view": {
+      "stroke": null  
+    }
+  }
+}
