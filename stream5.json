@@ -1,7 +1,7 @@
 {
     "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
     "description": "Stream graph showing internet usage across income groups over time with annotation.",
-    "width": 800,
+    "width": 1500,
     "height": 400,
     "background": "#eef7f9",
     "data": {
