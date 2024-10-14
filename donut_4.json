@@ -1,7 +1,7 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": null,
-  "background": "#eef7f9",  // Set the background color for the entire chart
+  "background": "#eef7f9",  
   "data": {
     "url": "https://raw.githubusercontent.com/nitzzzzzzzz/datasets/refs/heads/main/completion_rate_new.csv",
     "format": {"type": "csv"}
@@ -60,7 +60,7 @@
           "type": "text",
           "align": "center",
           "baseline": "middle",
-          "fontSize": 30,  // Increased the font size to make the number larger
+          "fontSize": 30, 
           "fontWeight": "bold",
           "dx": 0,
           "dy": 0  // Keeps the number centered
@@ -85,7 +85,7 @@
           "baseline": "middle",
           "fontSize": 20,
           "fontWeight": "bold",
-          "dx": -0,  // Adjust to position the % correctly
+          "dx": -0,  
           "dy": 30
         },
         "encoding": {
