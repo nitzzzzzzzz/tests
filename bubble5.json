@@ -1,0 +1,155 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 800,
+  "height": 400,
+  "title": {
+    "text": null,
+    "anchor": "start",
+    "fontSize": 14,
+    "dx": 20
+  },
+  "background": "#eef7f9",  
+  "data": {
+    "url": "https://raw.githubusercontent.com/nitzzzzzzzz/datasets/refs/heads/main/lr_continents.csv"
+  },
+  "params": [
+    {
+      "name": "Continent_selection",
+      "bind": {
+        "input": "select",
+        "options": [
+          null,
+          "Africa",
+          "Asia",
+          "Europe",
+          "North America",
+          "South America"
+        ],
+        "labels": [
+          "Show All",
+          "Africa",
+          "Asia",
+          "Europe",
+          "North America",
+          "South America"
+        ],
+        "name": "Continent Selection: "
+      }
+    }
+  ],
+  "config": {
+    "view": {
+      "stroke": null  
+    }
+  },
+  "transform": [
+    {
+      "filter": "Continent_selection == null || datum.Continent == Continent_selection"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "learning_poverty",
+      "type": "quantitative",
+      "title": "Learning Poverty (%)",
+      "axis": {"tickCount": 7, "grid": false}
+    },
+    "y": {
+      "field": "gni_per_capita",
+      "type": "quantitative",
+      "title": "GNI per Capita",
+      "axis": {"tickCount": 6, "grid": false},
+      "scale": {"domain": [0, 60000]}
+    }
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "circle",
+        "stroke": null
+      },
+      "encoding": {
+        "size": {
+          "field": "population",
+          "type": "quantitative",
+          "title": "Population",
+          "scale": {
+            "domain": [0, 20e6, 40e6, 60e6, 80e6, 100e6],
+            "range": [50, 100, 150, 200, 250]
+          },
+          "legend": {
+            "title": "Population",
+            "values": [20e6, 40e6, 60e6, 80e6, 100e6],
+            "labelExpr": "datum.value <= 20e6 ? '0-20M' : datum.value <= 40e6 ? '20M-40M' : datum.value <= 60e6 ? '40M-60M' : datum.value <= 80e6 ? '60M-80M' : '80M-100M'"
+          }
+        },
+        "color": {
+          "field": "Continent",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Africa",
+              "Asia",
+              "Europe",
+              "North America",
+              "South America"
+            ],
+            "range": [
+              "#e41a1c",
+              "#984ea3",
+              "#ff7f00",
+              "#0800fb",   
+              "#ff0184"    
+            ]
+          },
+          "legend": {"title": "Continent"}
+        },
+        "tooltip": [
+          {"field": "Entity", "type": "nominal", "title": "Country"},
+          {"field": "gni_per_capita", "type": "quantitative", "format": ","},
+          {"field": "learning_poverty", "type": "quantitative", "format": ","},
+          {"field": "population", "type": "quantitative", "title": "Population"}
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "circle",
+        "stroke": "black",
+        "strokeWidth": 2,
+        "strokeOpacity" : 1
+      },
+      "transform": [
+        {"filter": "datum.Entity == 'Singapore' || datum.Entity == 'South Africa' || datum.Entity == 'Italy' "}
+      ],
+      "encoding": {
+        "size": {
+          "field": "population",
+          "type": "quantitative"
+        },
+        "color": {
+          "field": "Continent",
+          "type": "nominal"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "dx": 15,
+        "dy": -15,
+        "fontSize": 14,
+        "fontWeight": "bold"
+      },
+      "transform": [
+        {"filter": "datum.Entity == 'Singapore' || datum.Entity == 'South Africa' || datum.Entity == 'Italy'"}
+      ],
+      "encoding": {
+        "text": {"field": "Entity"},
+        "x": {"field": "learning_poverty", "type": "quantitative"},
+        "y": {"field": "gni_per_capita", "type": "quantitative"},
+        "color": {"value": "black"}
+      }
+    }
+  ]
+}
