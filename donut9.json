@@ -1,0 +1,110 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": null,
+  "background": "#eef7f9",  
+  "data": {
+    "url": "https://raw.githubusercontent.com/nitzzzzzzzz/datasets/refs/heads/main/completion_rate_new.csv",
+    "format": {"type": "csv"}
+  },
+  "transform": [
+    {
+      "calculate": "replace(datum.Category, ' Completion Rate', '')",
+      "as": "ShortCategory"
+    }
+  ],
+  "facet": {
+    "column": {
+      "field": "ShortCategory",
+      "type": "nominal",
+      "header": {
+        "labelFontSize": 16,
+        "labelFontWeight": "bold", 
+        "title": null
+      }
+    }
+  },
+  "spec": {
+    "width": 280,
+    "height": 300,
+    "layer": [
+      {
+        "mark": {
+          "type": "arc",
+          "innerRadius": 55,
+          "outerRadius": 140
+        },
+        "encoding": {
+          "theta": {
+            "field": "Value",
+            "type": "quantitative"
+          },
+          "color": {
+            "field": "Gender",
+            "type": "nominal",
+            "scale": {
+              "range": ["#1f77b4", "#ff7f0e"]
+            },
+            "legend": {
+              "title": "Gender",
+              "orient": "right"
+            }
+          },
+          "tooltip": [
+            {"field": "Gender", "type": "nominal", "title": "Gender"},
+            {"field": "Value", "type": "quantitative", "title": "Completion Rate (%)"}
+          ]
+        }
+      },
+      {
+        "mark": {
+          "type": "text",
+          "align": "center",
+          "baseline": "middle",
+          "fontSize": 30, 
+          "fontWeight": "bold",
+          "dx": 0,
+          "dy": 0  
+        },
+        "encoding": {
+          "text": {
+            "aggregate": "mean",
+            "field": "Value",
+            "type": "quantitative",
+            "format": ".1f",
+            "title": "Completion Rate"
+          },
+          "color": {
+            "value": "black"
+          }
+        }
+      },
+      {
+        "mark": {
+          "type": "text",
+          "align": "center",
+          "baseline": "middle",
+          "fontSize": 20,
+          "fontWeight": "bold",
+          "dx": -0, 
+          "dy": 30
+        },
+        "encoding": {
+          "text": {"value": "%"},
+          "color": {
+            "value": "black"
+          }
+        }
+      }
+    ]
+  },
+  "config": {
+    "view": {
+      "stroke": "transparent"
+    },
+    "axis": {
+      "labelFontSize": 14,
+      "titleFontSize": 14
+    }
+  }
+}
+
