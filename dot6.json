@@ -1,0 +1,110 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "A ranged dot plot that shows the use of distance learning platforms for different income groups with selection filter.",
+  "background": "#eef7f9",
+  "title":{ "text" : "Comparing Most Used Learning Platforms with Income Group",
+  "align": "right",
+  "font": "Arial",
+  "color": "#5A5A5A"
+
+
+
+  },
+  "width": 500,
+  "height": 300,
+  "data": {
+    "url": "https://raw.githubusercontent.com/nitzzzzzzzz/datasets/refs/heads/main/goal04.instructionplatforms.csv"
+  },
+  "config": {
+    "view": {
+      "stroke": null  
+    }
+  },
+  "transform": [
+    {
+      "lookup": "platform",
+      "from": {
+        "data": {
+          "values": [
+            {"platform": "onlineplatforms", "label": "Online platforms"},
+            {"platform": "television", "label": "Television"},
+            {"platform": "mobilephones", "label": "Mobile phones"},
+            {"platform": "radio", "label": "Radio"},
+            {"platform": "takehomepackages", "label": "Take home packages"},
+            {"platform": "otherdistancelearningm", "label": "Other methods"}
+          ]
+        },
+        "key": "platform",
+        "fields": ["label"]
+      }
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "value",
+      "type": "quantitative",
+      "title": "Share of countries offering learning platform (%)",
+      "scale": {"domain": [0, 100]},
+      "axis": {"grid": false}
+    },
+    "y": {
+      "field": "label",
+      "type": "nominal",
+      "title": "Learning Method",
+      "axis": {
+        "offset": 5,
+        "ticks": false,
+        "minExtent": 70,
+        "domain": false,
+        "grid": false
+      }
+    }
+  },
+  "layer": [
+    {
+      "mark": "line",
+      "encoding": {
+        "detail": {
+          "field": "platform",
+          "type": "nominal"
+        },
+        "color": {"value": "#db646f"}
+      }
+    },
+    {
+      "selection": {
+        "income_selection": {
+          "type": "multi", 
+          "fields": ["income"],
+          "bind": "legend"
+        }
+      },
+      "mark": {
+        "type": "point",
+        "filled": true
+      },
+      "encoding": {
+        "color": {
+          "field": "income",
+          "type": "nominal",
+          "scale": {
+            "domain": ["LIC", "LMC", "UMC", "HIC"],
+            "range": ["#e6959c", "#db7093", "#009eff", "#4682b4"]
+          },
+          "title": "Income Group"
+        },
+        "size": {"value": 100},
+        "opacity": {"value": 1},
+        "tooltip": [
+          {"field": "label", "title": "Learning Method"},
+          {"field": "income", "title": "Income Group"},
+          {"field": "value", "title": "Share of Countries (%)"}
+        ],
+        "opacity": {
+          "condition": {"selection": "income_selection", "value": 1},
+          "value": 0.2
+        }
+      }
+    }
+  ]
+}
