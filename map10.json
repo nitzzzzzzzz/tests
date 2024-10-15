@@ -1,0 +1,126 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 700,
+  "height": 400,
+
+  "background": "#eef7f9",
+  "projection": {"type": "equalEarth"},
+  
+  "params": [
+    {
+      "name": "Country_selection",
+      "bind": {
+        "input": "select",
+        "options": [
+          "All",
+          "Afghanistan", "Albania", "Algeria", "Angola", "Argentina", "Antarctica",
+          "Armenia", "Australia", "Austria", "Azerbaijan", "Bahrain",
+          "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", 
+          "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", 
+          "Botswana", "Brazil", "Bulgaria", "Cambodia", "Canada", 
+          "Chad", "Chile", "China", "Colombia", "Costa Rica", "Croatia", 
+          "Cuba", "Cyprus", "Czech Republic", "Denmark", "Ecuador", 
+          "Egypt", "El Salvador", "Finland", "France", "Georgia", 
+          "Germany", "Greece", "Guatemala", "India", "Indonesia", 
+          "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", 
+          "Japan", "Jordan", "Kenya", "Kuwait", "Latvia", "Lebanon", 
+          "Libya", "Lithuania", "Luxembourg", "Malaysia", "Mexico", 
+          "Morocco", "Nepal", "Netherlands", "New Zealand", "Nigeria", 
+          "Norway", "Pakistan", "Peru", "Philippines", "Poland", 
+          "Portugal", "Qatar", "Russia", "Saudi Arabia", "Singapore", 
+          "Slovakia", "South Africa", "South Korea", "Spain", 
+          "Sri Lanka", "Sweden", "Switzerland", "Thailand", "Turkey", 
+          "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", 
+          "United States", "Venezuela", "Vietnam", "Zambia", "Zimbabwe"
+        ],
+        "name": "Country Selection: "
+        
+      },
+      "value": "All"
+    }
+  ],
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/nitzzzzzzzz/datasets/refs/heads/main/oceans.topojson",
+        "format": {"type": "topojson", "feature": "oceans"}
+      },
+      "mark": {"type": "geoshape", "fill": "lightblue"}
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/nitzzzzzzzz/datasets/refs/heads/main/WorldMapWithGraticules.topojson",
+        "format": {"type": "topojson", "feature": "ne_110m_graticules_30"}
+      },
+      "mark": {"type": "geoshape", "fill": null, "stroke": "#4d4d4d"}  
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/nitzzzzzzzz/datasets/refs/heads/main/ne_110m_admin_0_countries.topojson",
+        "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
+      },
+      "transform": [
+        {
+          "lookup": "properties.NAME",
+          "from": {
+            "data": {
+              "url": "https://raw.githubusercontent.com/nitzzzzzzzz/datasets/refs/heads/main/literacy_rates_6.csv",
+              "format": {"type": "csv"}
+            },
+            "key": "Entity",
+            "fields": ["Historical and more recent literacy estimates"]
+          }
+        },
+        {
+          "calculate": "datum.properties.NAME == 'Democratic Republic of the Congo' ? 'Congo (Kinshasa)' : datum.properties.NAME",
+          "as": "Country Name"
+        },
+        {
+          "calculate": "isValid(datum['Historical and more recent literacy estimates']) ? datum['Historical and more recent literacy estimates'] : 'No Data'",
+          "as": "Literacy Rate"
+        },
+        {
+          "filter": "Country_selection == 'All' || datum['Country Name'] == Country_selection"
+        }
+      ],
+      "mark": {
+        "type": "geoshape",
+        "stroke": "black",
+        "strokeWidth": 0.5
+      },
+      "encoding": {
+        "color": {
+          "field": "Literacy Rate",
+          "type": "quantitative",
+          "scale": {
+            "type": "linear",
+            "domain": [0, 100],
+            "range": ["#f7fbff", "#08306b"],
+            "nullValue": "lightgray"
+          },
+          "legend": {
+            "title": "Literacy Rate (%)",
+            "orient": "bottom",  
+            "direction": "horizontal" 
+          }
+        },
+        "tooltip": [
+          {"field": "Country Name", "type": "nominal", "title": "Country"},
+          {"field": "Literacy Rate", "type": "quantitative", "title": "Literacy Rate (%)", "format": ".2f"}
+        ]
+      }
+    }
+  ],
+  "config": {
+    "title": {
+      "fontSize": 24
+    },
+    "view": {
+      "stroke": "transparent"
+    },
+    "legend": {
+      "orient": "bottom",
+      "direction": "horizontal"
+    }
+  }
+} 
